@@ -1,19 +1,10 @@
 #include "esp_camera.h"
 #include <WiFi.h>
 
-// deklarasi fungsi dari app_httpd.cpp
 void startCameraServer();
 
-// ========================
-// GANTI DENGAN WIFI KAMU
-// ========================
 const char* ssid     = "Nokia 123";
 const char* password = "12345678";
-
-// ========================
-// PIN ESP32-S3 CAM N16R8 OV5640
-// ⚠️ Pastikan sesuai board kamu
-// ========================
 
 #define CAM_PIN_PWDN    -1
 #define CAM_PIN_RESET   -1
@@ -35,9 +26,6 @@ const char* password = "12345678";
 #define CAM_PIN_HREF    7
 #define CAM_PIN_PCLK    13
 
-// ========================
-// START CAMERA
-// ========================
 void startCamera()
 {
     camera_config_t config;
@@ -69,7 +57,7 @@ void startCamera()
 
     if (psramFound()) {
         Serial.println("PSRAM detected");
-        config.frame_size   = FRAMESIZE_SVGA;   // stabil untuk OV5640
+        config.frame_size   = FRAMESIZE_SVGA;
         config.jpeg_quality = 10;
         config.fb_count     = 2;
         config.grab_mode    = CAMERA_GRAB_LATEST;
@@ -98,9 +86,6 @@ void startCamera()
     Serial.println("Camera init OK");
 }
 
-// ========================
-// SETUP
-// ========================
 void setup()
 {
     Serial.begin(115200);
@@ -112,10 +97,8 @@ void setup()
     Serial.print("PSRAM Size: ");
     Serial.println(ESP.getPsramSize());
 
-    // Start camera
     startCamera();
 
-    // Connect WiFi
     WiFi.begin(ssid, password);
     Serial.print("Connecting to WiFi");
 
